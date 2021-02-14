@@ -126,6 +126,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           const devices = resp2.data.body.devices
           const stationName = devices[0].station_name
           const homeName = devices[0].home_name
+          const timeUtc = devices[0].dashboard_data.time_utc
           const homeReachable = devices[0].reachable
           const homeTemperature = devices[0].dashboard_data.Temperature
           const homeCO2 = devices[0].dashboard_data.CO2
@@ -184,6 +185,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             data: {
               stationName,
               homeName,
+              timeUtc,
               homeReachable,
               homeTemperature,
               homeCO2,

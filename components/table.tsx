@@ -4,14 +4,13 @@ import MaterialTable from 'material-table'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
 import tableIcons from '../components/tableIcons'
-import awsState from '../store/aws'
+import netatmoDataState from '../store/netatmoData'
 import showGraph from '../store/showGraph'
 import axios from 'axios'
 import dayjs from 'dayjs'
 
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import { regionNameMapping, statusMapping } from './const'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -21,28 +20,26 @@ const Alert = (props: AlertProps) => {
 }
 
 export const Table = (): JSX.Element => {
-  // 20200112: dangerouslyAllowMutabilityでできた
-  const [aws, setAws] = useRecoilState(awsState)
+  const [netatmoData, setNetatmoData] = useRecoilState(netatmoDataState)
   const [showG, setShowGraph] = useRecoilState(showGraph)
   const [loading, setLoading] = useState(true)
   const [slackBarOpen, setSlackBarOpen] = React.useState(false)
   const [apiErrorMsg, setApiErrorMsg] = React.useState('')
   useEffect(() => {
-    getAwsStatus()
-    setLoading(false)
+    getNetatmoData()
   }, [])
-  const getAwsStatus = () => {
+  const getNetatmoData = () => {
     axios
-      .get('/api/aws')
+      .get('/api/get')
       .then((resp) => {
-        setAws(resp.data)
+        setNetatmoData(resp.data)
         setLoading(false)
       })
       .catch((error) => {
         console.error(error.response)
         setSlackBarOpen(true)
         setApiErrorMsg(error.response.statusText || 'Error')
-        setAws([])
+        setNetatmoData([])
         setLoading(false)
       })
   }
@@ -58,56 +55,56 @@ export const Table = (): JSX.Element => {
         <MaterialTable
           icons={tableIcons}
           columns={[
-            { title: 'Service Name', field: 'service_name' },
-            { title: 'Service', field: 'service', width: 10 },
-            { title: 'Region', field: 'region', lookup: regionNameMapping },
-            { title: 'Summary', field: 'summary' },
             {
               title: 'Date (' + dayjs.tz.guess() + ')',
               field: 'date',
               render: (rowData) => (
                 <div>
                   {dayjs
-                    .unix(Number(rowData.date))
+                    .unix(Number(rowData.timeUtc))
                     .format('YYYY-MM-DDTHH:mm:ssZ[Z]')}
                 </div>
               ),
               defaultSort: 'desc',
-              type: 'string',
-            },
-            {
-              title: 'Status',
-              field: 'status',
-              lookup: statusMapping,
-            },
-          ]}
-          data={aws}
-          detailPanel={[
-            {
-              tooltip: 'Details',
-              render: (rowData) => {
-                return (
-                  <>
-                    <div className="title">{rowData.summary}</div>
-                    <div className="description">
-                      {dayjs
-                        .unix(Number(rowData.date))
-                        .format('YYYY-MM-DDTHH:mm:ss')}{' '}
-                      {rowData.service_name}
-                    </div>
-                    <div className="code">{rowData.description}</div>
-                  </>
-                )
+              type: 'datetime',
+              cellStyle: {
+                backgroundColor: '#039be5',
+                color: '#FFF'
               },
+              headerStyle: {
+                backgroundColor: '#039be5',
+              }
             },
+            { title: 'homeTemperature', field: 'homeTemperature', type: 'numeric' },
+            { title: 'homeCO2', field: 'homeCO2', type: 'numeric' },
+            { title: 'homeHumidity', field: 'homeHumidity', type: 'numeric' },
+            { title: 'homeNoise', field: 'homeNoise', type: 'numeric' },
+            { title: 'homePressure', field: 'homePressure', type: 'numeric' },
+            { title: 'homeAbsolutePressure', field: 'homeAbsolutePressure', type: 'numeric' },
+            { title: 'homeMinTemp', field: 'homeMinTemp', type: 'numeric' },
+            { title: 'homeMaxTemp', field: 'homeMaxTemp', type: 'numeric' },
+            { title: 'outdoorTemperature', field: 'outdoorTemperature', type: 'numeric' },
+            { title: 'outdoorHumidity', field: 'outdoorHumidity', type: 'numeric' },
+            { title: 'outdoorMinTemp', field: 'outdoorMinTemp', type: 'numeric' },
+            { title: 'outdoorMaxTemp', field: 'outdoorMaxTemp', type: 'numeric' },
+            { title: 'rain', field: 'rain', type: 'numeric' },
+            { title: 'sumRain1', field: 'sumRain1', type: 'numeric' },
+            { title: 'sumRain24', field: 'sumRain24', type: 'numeric' },
+            { title: 'windStrength', field: 'windStrength', type: 'numeric' },
+            { title: 'windAngle', field: 'windAngle', type: 'numeric' },
+            { title: 'gustStrength', field: 'gustStrength', type: 'numeric' },
+            { title: 'gustAngle', field: 'gustAngle', type: 'numeric' },
+            { title: 'maxWindStr', field: 'maxWindStr', type: 'numeric' },
+            { title: 'maxWindAngle', field: 'maxWindAngle', type: 'numeric' },
           ]}
+          data={netatmoData}
           options={{
-            filtering: true,
+            filtering: false,
             grouping: true,
             exportButton: true,
             exportFileName: 'exported',
             headerStyle: {
-              backgroundColor: '#e77f2f',
+              backgroundColor: '#01579b',
               color: '#FFF',
             },
           }}
@@ -133,7 +130,7 @@ export const Table = (): JSX.Element => {
               disabled: loading,
               onClick: async () => {
                 setLoading(true)
-                await getAwsStatus()
+                await getNetatmoData()
               },
             },
           ]}

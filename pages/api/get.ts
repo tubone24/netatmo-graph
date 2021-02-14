@@ -13,6 +13,7 @@ export interface DbRefWithData{
   data: {
     stationName: string
     homeName: string
+    timeUtc: number
     homeReachable: boolean
     homeTemperature: number
     homeCO2: number

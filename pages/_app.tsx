@@ -11,8 +11,8 @@ const App = ({ Component, pageProps }: AppProps) => (
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-        <title>AWS Health Dashboard</title>
-        <meta property="og:title" content="AWS Health Dashboard" />
+        <title>Home Status Dashboard</title>
+        <meta property="og:title" content="Home Status Dashboard" />
         <meta
           property="og:description"
           content="This is a web page where you can check the status of AWS. The official AWS Service Health Dashboard is difficult to use, so I recreated it using Next.js Vercel."

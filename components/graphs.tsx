@@ -1,37 +1,9 @@
 import React from 'react'
-import Link from 'next/link'
-import AlertPerRegion from '../components/alertPerRegion'
-import AlertPerStatus from '../components/alertPerStatus'
-import AlertPerService from '../components/alertPerService'
+import HomeTemperatureGraph from "./homeTemperatureGraph";
 export const Graphs = (): JSX.Element => {
   return (
     <div className="container">
-      <main>
-        <div className="grid">
-          <Link href="/graph1">
-            <div className="card">
-              <AlertPerRegion />
-            </div>
-          </Link>
-
-          <Link href="/graph2">
-            <div className="card">
-              <AlertPerStatus />
-            </div>
-          </Link>
-
-          <Link href="/graph3">
-            <div className="card">
-              <AlertPerService />
-            </div>
-          </Link>
-
-          <a href="https://status.aws.amazon.com/" className="card">
-            <h3>More Information? &rarr;</h3>
-            <p>Access AWS Service Health Dashboard (Official)</p>
-          </a>
-        </div>
-      </main>
+      <HomeTemperatureGraph/>
 
       <style jsx>{`
         a {
