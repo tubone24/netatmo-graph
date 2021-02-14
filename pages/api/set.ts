@@ -126,6 +126,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           const devices = resp2.data.body.devices
           const stationName = devices[0].station_name
           const homeName = devices[0].home_name
+          const homeReachable = devices[0].reachable
           const homeTemperature = devices[0].dashboard_data.Temperature
           const homeCO2 = devices[0].dashboard_data.CO2
           const homeHumidity = devices[0].dashboard_data.Humidity
@@ -139,6 +140,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           let outdoorHumidity
           let outdoorMinTemp
           let outdoorMaxTemp
+          let moduleReachable = true
           let rain
           let sumRain1
           let sumRain24
@@ -161,6 +163,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             if (module.dashboard_data.max_temp) {
               outdoorMaxTemp = module.dashboard_data.max_temp
             }
+            if (!module.reachable) {
+              moduleReachable = false
+            }
             rain = module.dashboard_data.Rain || 0
             sumRain1 = module.dashboard_data.sum_rain_1 || 0
             sumRain24 = module.dashboard_data.sum_rain_24 || 0
@@ -179,6 +184,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             data: {
               stationName,
               homeName,
+              homeReachable,
               homeTemperature,
               homeCO2,
               homeHumidity,
@@ -187,7 +193,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
               homeAbsolutePressure,
               homeMinTemp,
               homeMaxTemp,
-              modules,
               outdoorTemperature,
               outdoorHumidity,
               outdoorMinTemp,
@@ -204,6 +209,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             }
           }
           faunadbClient.query(q.Create(q.Ref('classes/module_data'), moduleData)).then((response) => {
+            if (!homeReachable || !moduleReachable) {
+              res.statusCode = 404
+              res.json({status: 'not reachable', homeReachable, moduleReachable})
+            }
               res.statusCode = 200
               res.json(response)
           }).catch((error) => {
@@ -212,8 +221,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           })
         }
       ).catch((error) => {
-        console.error(error.response)
-        res.statusCode = error.response.status || 500
+        console.error(error)
+        res.statusCode = 500
         res.statusMessage = error.response.statusText || 'InternalServerError'
         res.json({ error: error.response.statusText || 'InternalServerError' })
       })
