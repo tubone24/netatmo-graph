@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import faunadb from 'faunadb'
 
-const q = faunadb.query;
+const q = faunadb.query
 
 export interface DbRefs {
   data: object[]
 }
 
-export interface DbRefWithData{
+export interface DbRefWithData {
   ref: object
   ts: number
   data: {
@@ -43,21 +43,27 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const faunadbClient = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
   })
-  faunadbClient.query<DbRefs>(q.Paginate(q.Match(q.Ref('indexes/all_module_data')))).then((response) => {
-    const allModuleDataRefs = response.data
-    const getAllModuleDataQuery = allModuleDataRefs.map((ref) => q.Get(ref));
-    faunadbClient.query<DbRefWithData[]>(getAllModuleDataQuery).then((resp) => {
-      const result = resp.map((d) => (d.data))
-      res.statusCode = 200
-      res.json(result)
-    }).catch((error) => {
-      res.statusCode = 500
-      res.json({error: error.toString()})
+  faunadbClient
+    .query<DbRefs>(q.Paginate(q.Match(q.Ref('indexes/all_module_data'))))
+    .then((response) => {
+      const allModuleDataRefs = response.data
+      const getAllModuleDataQuery = allModuleDataRefs.map((ref) => q.Get(ref))
+      faunadbClient
+        .query<DbRefWithData[]>(getAllModuleDataQuery)
+        .then((resp) => {
+          const result = resp.map((d) => d.data)
+          res.statusCode = 200
+          res.json(result)
+        })
+        .catch((error) => {
+          res.statusCode = 500
+          res.json({ error: error.toString() })
+        })
     })
-  }).catch((error) => {
-    res.statusCode = 500
-    res.json({error: error.toString()})
-  })
+    .catch((error) => {
+      res.statusCode = 500
+      res.json({ error: error.toString() })
+    })
 }
 
 export default handler

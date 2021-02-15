@@ -69,24 +69,48 @@ export const Table = (): JSX.Element => {
               type: 'datetime',
               cellStyle: {
                 backgroundColor: '#039be5',
-                color: '#FFF'
+                color: '#FFF',
               },
               headerStyle: {
                 backgroundColor: '#039be5',
-              }
+              },
             },
-            { title: 'homeTemperature', field: 'homeTemperature', type: 'numeric' },
+            {
+              title: 'homeTemperature',
+              field: 'homeTemperature',
+              type: 'numeric',
+            },
             { title: 'homeCO2', field: 'homeCO2', type: 'numeric' },
             { title: 'homeHumidity', field: 'homeHumidity', type: 'numeric' },
             { title: 'homeNoise', field: 'homeNoise', type: 'numeric' },
             { title: 'homePressure', field: 'homePressure', type: 'numeric' },
-            { title: 'homeAbsolutePressure', field: 'homeAbsolutePressure', type: 'numeric' },
+            {
+              title: 'homeAbsolutePressure',
+              field: 'homeAbsolutePressure',
+              type: 'numeric',
+            },
             { title: 'homeMinTemp', field: 'homeMinTemp', type: 'numeric' },
             { title: 'homeMaxTemp', field: 'homeMaxTemp', type: 'numeric' },
-            { title: 'outdoorTemperature', field: 'outdoorTemperature', type: 'numeric' },
-            { title: 'outdoorHumidity', field: 'outdoorHumidity', type: 'numeric' },
-            { title: 'outdoorMinTemp', field: 'outdoorMinTemp', type: 'numeric' },
-            { title: 'outdoorMaxTemp', field: 'outdoorMaxTemp', type: 'numeric' },
+            {
+              title: 'outdoorTemperature',
+              field: 'outdoorTemperature',
+              type: 'numeric',
+            },
+            {
+              title: 'outdoorHumidity',
+              field: 'outdoorHumidity',
+              type: 'numeric',
+            },
+            {
+              title: 'outdoorMinTemp',
+              field: 'outdoorMinTemp',
+              type: 'numeric',
+            },
+            {
+              title: 'outdoorMaxTemp',
+              field: 'outdoorMaxTemp',
+              type: 'numeric',
+            },
             { title: 'rain', field: 'rain', type: 'numeric' },
             { title: 'sumRain1', field: 'sumRain1', type: 'numeric' },
             { title: 'sumRain24', field: 'sumRain24', type: 'numeric' },

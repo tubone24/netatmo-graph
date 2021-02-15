@@ -26,7 +26,7 @@ export interface Module {
   rf_status: number
   battery_vp: number
   dashboard_data: {
-    "time_utc": number
+    time_utc: number
     Temperature?: number
     Humidity?: number
     min_temp?: number
@@ -110,7 +110,7 @@ export interface GetStationDataResp {
 }
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  const params = new URLSearchParams();
+  const params = new URLSearchParams()
   params.append('grant_type', 'password')
   params.append('client_id', process.env.NETATMO_CLIENT_ID)
   params.append('client_secret', process.env.NETATMO_CLIENT_SECRET)
@@ -121,8 +121,11 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     .post<AuthResp>('https://api.netatmo.com/oauth2/token', params)
     .then((resp) => {
       const accessToken = resp.data.access_token
-      axios.get<GetStationDataResp>(`https://api.netatmo.com/api/getstationsdata?access_token=${accessToken}`).then(
-        resp2 => {
+      axios
+        .get<GetStationDataResp>(
+          `https://api.netatmo.com/api/getstationsdata?access_token=${accessToken}`
+        )
+        .then((resp2) => {
           const devices = resp2.data.body.devices
           const stationName = devices[0].station_name
           const homeName = devices[0].home_name
@@ -133,7 +136,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           const homeHumidity = devices[0].dashboard_data.Humidity
           const homeNoise = devices[0].dashboard_data.Noise
           const homePressure = devices[0].dashboard_data.Pressure
-          const homeAbsolutePressure = devices[0].dashboard_data.AbsolutePressure
+          const homeAbsolutePressure =
+            devices[0].dashboard_data.AbsolutePressure
           const homeMinTemp = devices[0].dashboard_data.min_temp
           const homeMaxTemp = devices[0].dashboard_data.max_temp
           const modules = devices[0].modules
@@ -177,7 +181,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             maxWindStr = module.dashboard_data.max_wind_str || 0
             maxWindAngle = module.dashboard_data.max_wind_angle || 0
           }
-          const q = faunadb.query;
+          const q = faunadb.query
           const faunadbClient = new faunadb.Client({
             secret: process.env.FAUNADB_SERVER_SECRET,
           })
@@ -208,26 +212,35 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
               gustAngle,
               maxWindStr,
               maxWindAngle,
-            }
+            },
           }
-          faunadbClient.query(q.Create(q.Ref('classes/module_data'), moduleData)).then((response) => {
-            if (!homeReachable || !moduleReachable) {
-              res.statusCode = 404
-              res.json({status: 'not reachable', homeReachable, moduleReachable})
-            }
+          faunadbClient
+            .query(q.Create(q.Ref('classes/module_data'), moduleData))
+            .then((response) => {
+              if (!homeReachable || !moduleReachable) {
+                res.statusCode = 404
+                res.json({
+                  status: 'not reachable',
+                  homeReachable,
+                  moduleReachable,
+                })
+              }
               res.statusCode = 200
               res.json(response)
-          }).catch((error) => {
-            res.statusCode = 500
-            res.json(error)
+            })
+            .catch((error) => {
+              res.statusCode = 500
+              res.json(error)
+            })
+        })
+        .catch((error) => {
+          console.error(error)
+          res.statusCode = 500
+          res.statusMessage = error.response.statusText || 'InternalServerError'
+          res.json({
+            error: error.response.statusText || 'InternalServerError',
           })
-        }
-      ).catch((error) => {
-        console.error(error)
-        res.statusCode = 500
-        res.statusMessage = error.response.statusText || 'InternalServerError'
-        res.json({ error: error.response.statusText || 'InternalServerError' })
-      })
+        })
     })
     .catch((error) => {
       console.error(error.response)
