@@ -1,11 +1,13 @@
 import React from 'react'
 import TemperatureGraph from './temperatureGraph'
 import HumidityGraph from './humidityGraph'
+import HomeCO2 from './homeCO2'
 export const Graphs = (): JSX.Element => {
   return (
     <div className="container">
         <TemperatureGraph />
         <HumidityGraph />
+        <HomeCO2 />
       <style jsx>{`
         main {
           padding: 5rem 0;
