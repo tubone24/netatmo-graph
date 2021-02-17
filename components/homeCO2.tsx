@@ -48,12 +48,13 @@ export const HomeCO2Graph = (): JSX.Element => {
     },
     scales: {
       xAxes: [
-        {type: "time",
+        {
+          type: 'time',
           time: {
             format: 'YYYY-MM-DDTHH:mm:ssZ[Z]',
-            unit: "hour",
+            unit: 'hour',
             displayFormats: {
-              hour: 'YYYY-MM-DD HH:00:00'
+              hour: 'YYYY-MM-DD HH:00:00',
             },
           },
           scaleLabel: {
@@ -71,7 +72,7 @@ export const HomeCO2Graph = (): JSX.Element => {
       ],
     },
   }
-  return <Line data={data} options={options} width={400} height={100}/>
+  return <Line data={data} options={options} width={400} height={100} />
 }
 
 export default HomeCO2Graph

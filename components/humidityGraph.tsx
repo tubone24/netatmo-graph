@@ -10,9 +10,7 @@ export const HumidityGraph = (): JSX.Element => {
     dayjs.unix(Number(data.timeUtc)).format('YYYY-MM-DDTHH:mm:ssZ[Z]')
   )
   const dataSetHomeHumidity = netatmo.map((data) => data.homeHumidity)
-  const dataSetOutdoorHumidity = netatmo.map(
-    (data) => data.outdoorHumidity
-  )
+  const dataSetOutdoorHumidity = netatmo.map((data) => data.outdoorHumidity)
   const data = {
     labels: labels,
     datasets: [
@@ -72,12 +70,13 @@ export const HumidityGraph = (): JSX.Element => {
     },
     scales: {
       xAxes: [
-        {type: "time",
+        {
+          type: 'time',
           time: {
             format: 'YYYY-MM-DDTHH:mm:ssZ[Z]',
-            unit: "hour",
+            unit: 'hour',
             displayFormats: {
-              hour: 'YYYY-MM-DD HH:00:00'
+              hour: 'YYYY-MM-DD HH:00:00',
             },
           },
           scaleLabel: {
@@ -95,7 +94,7 @@ export const HumidityGraph = (): JSX.Element => {
       ],
     },
   }
-  return <Line data={data} options={options} width={400} height={100}/>
+  return <Line data={data} options={options} width={400} height={100} />
 }
 
 export default HumidityGraph
