@@ -8,7 +8,7 @@ on:
     - cron: "0/30 * * * *"
 
 jobs:
-  GenerateWordCloud:
+  SetNetatmoData30min:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
