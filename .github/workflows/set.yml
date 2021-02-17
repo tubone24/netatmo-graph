@@ -3,7 +3,7 @@ name: Set Netatmo Data
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: "0/30 * * * *"
 
