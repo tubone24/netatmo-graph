@@ -1,4 +1,4 @@
-name: Generate Word Cloud
+name: Set Netatmo Data
 
 on:
   push:
