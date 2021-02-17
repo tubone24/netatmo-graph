@@ -15,4 +15,4 @@ jobs:
       - name: Set Netatmo API
         env:
           API_KEY: ${{ secrets.API_KEY }}
-        run: "curl --location --request POST 'https://netatmo-graph.vercel.app/api/set' --header 'key: $API_KEY'"
+        run: 'curl --location --request POST "https://netatmo-graph.vercel.app/api/set" --header "key: $API_KEY"'
