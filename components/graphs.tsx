@@ -3,13 +3,19 @@ import TemperatureGraph from './temperatureGraph'
 import HumidityGraph from './humidityGraph'
 import HomeCO2 from './homeCO2'
 import HomeNoise from './homeNoise'
+import HomePressure from './homePressure'
+import Rain from './rain'
+import Wind from './wind'
 export const Graphs = (): JSX.Element => {
   return (
     <div className="container">
-        <TemperatureGraph />
-        <HumidityGraph />
-        <HomeCO2 />
-        <HomeNoise />
+      <TemperatureGraph />
+      <HumidityGraph />
+      <HomeCO2 />
+      <HomeNoise />
+      <HomePressure />
+      <Rain />
+      <Wind />
       <style jsx>{`
         main {
           padding: 5rem 0;
@@ -18,7 +24,7 @@ export const Graphs = (): JSX.Element => {
           display: flex;
           height: 50%;
           flex-direction: column;
-          justify-content: space-around;;
+          justify-content: space-around;
           align-items: center;
         }
       `}</style>
