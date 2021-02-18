@@ -112,12 +112,12 @@ export interface GetStationDataResp {
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     res.statusCode = 400
-    res.json({error: 'not permitted only POST'})
+    res.json({ error: 'not permitted only POST' })
     return
   }
   if (req.headers.key !== process.env.SET_API_KEY) {
     res.statusCode = 403
-    res.json({error: 'invalid API KEY'})
+    res.json({ error: 'invalid API KEY' })
     return
   }
   const params = new URLSearchParams()

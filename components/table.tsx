@@ -65,6 +65,7 @@ export const Table = (): JSX.Element => {
                     .format('YYYY-MM-DDTHH:mm:ssZ[Z]')}
                 </div>
               ),
+              customSort: (a, b) => a.timeUtc - b.timeUtc,
               defaultSort: 'desc',
               type: 'string',
               cellStyle: {

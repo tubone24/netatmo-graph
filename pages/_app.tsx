@@ -19,18 +19,12 @@ const App = ({ Component, pageProps }: AppProps) => (
         />
         <meta name="keywords" content="Netatmo, Home, Visualize" />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://netatmo-graph.vercel.app/"
-        />
+        <meta property="og:url" content="https://netatmo-graph.vercel.app/" />
         <meta property="og:image" content="https://i.imgur.com/bnJMK70.png" />
         <meta property="og:site_name" content="Home Environment Dashboard" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@meitante1conan" />
-        <meta
-          name="twitter:url"
-          content="https://netatmo-graph.vercel.app/"
-        />
+        <meta name="twitter:url" content="https://netatmo-graph.vercel.app/" />
         <meta name="twitter:title" content="Home Environment Dashboard" />
         <meta
           name="twitter:description"
