@@ -102,7 +102,7 @@ export const Table = (): JSX.Element => {
             { title: 'Home MaxTemp(℃)', field: 'homeMaxTemp', type: 'numeric' },
             {
               title: 'Outdoor Temperature(℃)',
-              field: 'OutdoorTemperature',
+              field: 'outdoorTemperature',
               type: 'numeric',
             },
             {
