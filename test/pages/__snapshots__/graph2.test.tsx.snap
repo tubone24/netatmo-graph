@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Graph2 matches snapshot 1`] = `"<main class=\\"jsx-531684522\\"><h1 class=\\"jsx-531684522 title\\">Back to <a href=\\"/\\">AWS Health Dashboard</a></h1><div class=\\"container\\"><div class=\\"container\\"><canvas height=\\"0\\" width=\\"0\\" style=\\"display: block;\\" class=\\"chartjs-render-monitor\\"></canvas></div></div></main>"`;
