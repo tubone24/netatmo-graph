@@ -66,7 +66,7 @@ export const Table = (): JSX.Element => {
                 </div>
               ),
               defaultSort: 'desc',
-              type: 'datetime',
+              type: 'string',
               cellStyle: {
                 backgroundColor: '#039be5',
                 color: '#FFF',
