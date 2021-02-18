@@ -144,13 +144,14 @@ export const Table = (): JSX.Element => {
           data={netatmoData}
           options={{
             filtering: false,
-            grouping: true,
+            grouping: false,
             exportButton: true,
             exportFileName: 'exported',
             headerStyle: {
               backgroundColor: '#01579b',
               color: '#FFF',
             },
+            search: false,
           }}
           isLoading={loading}
           actions={[
@@ -180,9 +181,9 @@ export const Table = (): JSX.Element => {
           ]}
           title={
             <div className="header">
-              <img src="/awslogo.png" />
-              <a href="https://aws-health-dashboard.vercel.app/">
-                AWS Health Dashboard
+              <img alt="logo" src="/netatmologo.png" />
+              <a href="https://netatmo-graph.vercel.app/">
+                Home Environment Dashboard
               </a>
             </div>
           }
