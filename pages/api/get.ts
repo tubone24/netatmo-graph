@@ -52,6 +52,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
         .query<DbRefWithData[]>(getAllModuleDataQuery)
         .then((resp) => {
           const result = resp.map((d) => d.data)
+          console.log(result)
           res.statusCode = 200
           res.json(result)
         })
