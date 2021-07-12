@@ -61,10 +61,12 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
       const deleteRef = response.data
       deleteRef.map((ref) => {
         console.log(ref)
-        q.Delete(ref[2])
+        faunadbClient.query(q.Delete(ref[2])).then((response2) => {
+          console.log(response2)
+          res.statusCode = 200
+          res.json({"status": "ok"})
+        })
       })
-      res.statusCode = 200
-      res.json({"status": "ok"})
     })
     .catch((error) => {
       res.statusCode = 500
