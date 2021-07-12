@@ -22,7 +22,7 @@ const config = {
 axios.post('https://api.imgur.com/3/image', data, config).then((resp) => {
   const imageLink = resp.data.data.link
     console.log(imageLink)
-    axios.get(netatmoUrl).then( (resp) => {
+    axios.get(`${netatmoUrl}api/get`).then( (resp) => {
       const latestData = resp.data[resp.data.length - 1]
       console.log(latestData)
       const slackPayload = {
