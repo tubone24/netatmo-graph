@@ -3,7 +3,7 @@ name: Update text
 on:
   push:
     branches:
-      - main
+      - update_text
   schedule:
     - cron: '0 0 1 * *'
 
