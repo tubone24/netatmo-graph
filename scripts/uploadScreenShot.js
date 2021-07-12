@@ -26,7 +26,7 @@ axios.post('https://api.imgur.com/3/image', data, config).then((resp) => {
       const latestData = resp.data[resp.data.length - 1]
       console.log(latestData)
       const slackPayload = {
-        text: `*Good morning!* \n<${netatmoUrl}|Click here> for details! \n${imageLink}`,
+        text: `*How are you?* \n<${netatmoUrl}|Click here> for details! \n${imageLink}`,
         attachments: [
           {
             fields: [
