@@ -59,7 +59,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     .query<DbRefs>(q.Paginate(q.Range((q.Match(q.Index('all_module_data_sort_timeutc'))), [], [undefined,oneMonthBeforeEpoch])))
     .then((response) => {
       const deleteRef = response.data
-      deleteRef.map((ref) => q.Delete(ref))
+      deleteRef.map((ref) => {
+        console.log(req)
+        q.Delete(ref)
+      })
     })
     .catch((error) => {
       res.statusCode = 500
