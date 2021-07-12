@@ -58,15 +58,19 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   faunadbClient
     .query<DbRefs>(q.Paginate(q.Range((q.Match(q.Index('all_module_data_sort_timeutc'))), [], [undefined,oneMonthBeforeEpoch])))
     .then((response) => {
+      console.log(response)
       const deleteRef = response.data
       deleteRef.map((ref) => {
-        console.log(ref)
         faunadbClient.query(q.Delete(ref[2])).then((response2) => {
           console.log(response2)
-          res.statusCode = 200
-          res.json({"status": "ok"})
-        })
+        }).catch((error) => {
+          res.statusCode = 500
+          res.json({ error: error.toString() })
+          }
+        )
       })
+      res.statusCode = 200
+      res.json({"status": "ok"})
     })
     .catch((error) => {
       res.statusCode = 500
