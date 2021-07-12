@@ -1,0 +1,33 @@
+name: Update text
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  UpdateText:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: update text
+        run: echo "update `date`" > update_text.txt
+      - name: Setup git
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        run: |
+          git config --local user.name GitHubActions
+          git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+      - name: Git push, tag, upload assets
+        run: |
+          git checkout main
+          git pull origin main
+          git add -A
+          DIFF=`git diff --cached --numstat | wc -l`
+          if [ $DIFF -eq 0 ]; then
+            exit 0
+          fi
+          git commit -am 'GitHub Actions commit' --allow-empty
+          git push origin main
