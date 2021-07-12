@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios');
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
-const netatmoUrl = 'https://netatmo-graph.vercel.app/api/get';
+const netatmoUrl = 'https://netatmo-graph.vercel.app/';
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 const imgurClientId = process.env.IMGUR_CLIENT_ID;
 
