@@ -1,0 +1,26 @@
+name: Upload Slack
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 22 * * *'
+
+jobs:
+  UploadSlack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+      - name: npm install
+        run: npm install
+      - name: run cypress
+        run: npm run cy:run
+      - name: Upload Slack
+        env:
+          IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node scripts/uploadScreenShot.js
