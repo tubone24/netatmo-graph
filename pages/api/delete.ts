@@ -60,8 +60,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     .then((response) => {
       const deleteRef = response.data
       deleteRef.map((ref) => {
-        console.log(req)
-        q.Delete(ref[2])
+        console.log(ref)
+        //q.Delete(ref[2])
       })
     })
     .catch((error) => {
