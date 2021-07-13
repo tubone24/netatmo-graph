@@ -15,6 +15,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: 'v1.x'
       - name: npm install
         run: npm install
       - name: run cypress
@@ -23,4 +26,4 @@ jobs:
         env:
           IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: node scripts/uploadScreenShot.js
+        run: deno run scripts/uploadScreenShot.js
