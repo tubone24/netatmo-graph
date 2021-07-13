@@ -10,9 +10,10 @@ const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 const imgurClientId = process.env.IMGUR_CLIENT_ID;
 
 const base64Data = fs.readFileSync(filePath, { encoding: 'base64' });
+const base64Text = new TextDecoder().decode(base64Data)
 
 const data = {
-  image: base64Data.replace(new RegExp('data.*base64,'), ''),
+  image: base64Text.replace(new RegExp('data.*base64,'), ''),
   type: 'base64'
 }
 
