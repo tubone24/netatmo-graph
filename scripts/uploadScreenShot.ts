@@ -1,7 +1,8 @@
 // denoでここら辺のインポートどうやるんだろう.... (TS2691)
 // @ts-ignore
 import * as fs from 'https://deno.land/std@v0.36.0/node/fs.ts'
-import axios from 'axios'
+// @ts-ignore
+import axiod from "https://deno.land/x/axiod/mod.ts";
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
 const netatmoUrl = 'https://netatmo-graph.vercel.app/';
@@ -21,10 +22,10 @@ const config = {
   }
 }
 
-axios.post('https://api.imgur.com/3/image', data, config).then((resp) => {
+axiod.post('https://api.imgur.com/3/image', data, config).then((resp) => {
   const imageLink = resp.data.data.link
     console.log(imageLink)
-    axios.get(`${netatmoUrl}api/get`).then( (resp) => {
+    axiod.get(`${netatmoUrl}api/get`).then( (resp) => {
       const latestData = resp.data[resp.data.length - 1]
       console.log(latestData)
       const slackPayload = {
@@ -81,7 +82,7 @@ axios.post('https://api.imgur.com/3/image', data, config).then((resp) => {
           }
         ]
       }
-      axios.post(slackWebhookUrl, slackPayload).then((resp) => {
+      axiod.post(slackWebhookUrl, slackPayload).then((resp) => {
         console.log("OK")
       })
     })
