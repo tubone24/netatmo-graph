@@ -26,4 +26,4 @@ jobs:
         env:
           IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: deno run --unstable scripts/uploadScreenShot.ts
+        run: node scripts/uploadScreenShot.js
