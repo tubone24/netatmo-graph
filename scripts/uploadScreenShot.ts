@@ -1,4 +1,6 @@
-import fs from 'fs'
+// denoでここら辺のインポートどうやるんだろう.... (TS2691)
+// @ts-ignore
+import * as fs from 'https://deno.land/std@v0.36.0/node/fs.ts'
 import axios from 'axios'
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
