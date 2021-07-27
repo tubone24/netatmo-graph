@@ -1,11 +1,11 @@
 import {
   encode,
-} from 'https://deno.land/std@1.103.0/encoding/base64.ts';
+} from 'https://deno.land/std/encoding/base64.ts';
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
 const netatmoUrl = 'https://netatmo-graph.vercel.app/';
-const slackWebhookUrl = Deno.env.get('SLACK_WEBHOOK_URL');
-const imgurClientId = Deno.env.get('IMGUR_CLIENT_ID');
+const slackWebhookUrl = Deno.env.get('SLACK_WEBHOOK_URL') as string;
+const imgurClientId = Deno.env.get('IMGUR_CLIENT_ID') as string;
 
 const readImageData = await Deno.readFile(filePath);
 const encodedData = encode(readImageData);
