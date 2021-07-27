@@ -1,91 +1,95 @@
-// denoでここら辺のインポートどうやるんだろう.... (TS2691)
-// @ts-ignore
-import * as fs from 'https://deno.land/std@v0.36.0/node/fs.ts'
-// @ts-ignore
-import axiod from "https://deno.land/x/axiod/mod.ts";
+import {
+  encode,
+} from "https://deno.land/std@0.97.0/encoding/base64.ts";
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
 const netatmoUrl = 'https://netatmo-graph.vercel.app/';
-const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
-const imgurClientId = process.env.IMGUR_CLIENT_ID;
+const slackWebhookUrl = Deno.env.get('SLACK_WEBHOOK_URL');
+const imgurClientId = Deno.env.get('IMGUR_CLIENT_ID');
 
-const base64Data = fs.readFileSync(filePath, { encoding: 'base64' });
-const base64Text = new TextDecoder().decode(base64Data)
+const readImageData = await Deno.readFile(filePath);
+const encodedData = encode(readImageData);
 
-const data = {
-  image: base64Text.replace(new RegExp('data.*base64,'), ''),
+const imgurPayload = {
+  image: encodedData.replace(new RegExp('data.*base64,'), ''),
   type: 'base64'
 }
 
-const config = {
-  headers: {
-    Authorization: `Client-ID ${imgurClientId}`
-  }
+const imgurHeaders = {
+  'Accept': 'application/json',
+  'Authorization': `Client-ID ${imgurClientId}`,
+  'Content-Type': 'application/json'
 }
 
-axiod.post('https://api.imgur.com/3/image', data, config).then((resp) => {
-  const imageLink = resp.data.data.link
-    console.log(imageLink)
-    axiod.get(`${netatmoUrl}api/get`).then( (resp) => {
-      const latestData = resp.data[resp.data.length - 1]
-      console.log(latestData)
-      const slackPayload = {
-        text: `*How are you?* \n<${netatmoUrl}|Click here> for details! \n${imageLink}`,
-        attachments: [
-          {
-            fields: [
-              {
-                title: 'Home Temperature',
-                value: `${latestData.homeTemperature}℃ (${latestData.homeMaxTemp}℃/${latestData.homeMinTemp}℃)`,
-                short: 'true'
-              },
-              {
-                title: 'Home Humidity',
-                value: `${latestData.homeHumidity}％`,
-                short: 'true'
-              },
-              {
-                title: 'Home CO2',
-                value: `${latestData.homeCO2}ppm`,
-                short: 'true'
-              },
-              {
-                title: 'Home Noise',
-                value: `${latestData.homeNoise}dB`,
-                short: 'true'
-              },
-              {
-                title: 'Home Pressure',
-                value: `${latestData.homePressure}mb`,
-                short: 'true'
-              },
-              {
-                title: 'Outdoor Temperature',
-                value: `${latestData.outdoorTemperature}℃ (${latestData.outdoorMaxTemp}℃/${latestData.outdoorMinTemp}℃)`,
-                short: 'true'
-              },
-              {
-                title: 'Outdoor Humidity',
-                value: `${latestData.outdoorHumidity}％`,
-                short: 'true'
-              },
-              {
-                title: 'Rainfall',
-                value: `${latestData.rain}mm (${latestData.sumRain1}mm/h / ${latestData.sumRain24}mm/24h)`,
-                short: 'true'
-              },
-              {
-                title: 'Wind',
-                value: `${latestData.windStrength}bf (Gust${latestData.gustStrength}bf / Max${latestData.maxWindStr}bf)`,
-                short: 'true'
-              },
-            ]
-          }
-        ]
-      }
-      axiod.post(slackWebhookUrl, slackPayload).then((resp) => {
-        console.log("OK")
-      })
-    })
+const imgurRes = await fetch('https://api.imgur.com/3/image', {method: 'POST', headers: imgurHeaders, body: JSON.stringify(imgurPayload)})
+const imgurJson = imgurRes.json()
+const { data: imgurData } = await imgurJson
+const imgurLink = imgurData.link
+
+const netatmoRes = await fetch(`${netatmoUrl}api/get`)
+const netatmoJson = netatmoRes.json()
+const netatmoData = await netatmoJson
+const latestNetatmoData = netatmoData[netatmoData.length - 1]
+console.log(latestNetatmoData)
+
+const slackPayload = {
+  text: `*How are you?* \n<${netatmoUrl}|Click here> for details! \n${imgurLink}`,
+  attachments: [
+    {
+      fields: [
+        {
+          title: 'Home Temperature',
+          value: `${latestNetatmoData.homeTemperature}℃ (${latestNetatmoData.homeMaxTemp}℃/${latestNetatmoData.homeMinTemp}℃)`,
+          short: 'true'
+        },
+        {
+          title: 'Home Humidity',
+          value: `${latestNetatmoData.homeHumidity}％`,
+          short: 'true'
+        },
+        {
+          title: 'Home CO2',
+          value: `${latestNetatmoData.homeCO2}ppm`,
+          short: 'true'
+        },
+        {
+          title: 'Home Noise',
+          value: `${latestNetatmoData.homeNoise}dB`,
+          short: 'true'
+        },
+        {
+          title: 'Home Pressure',
+          value: `${latestNetatmoData.homePressure}mb`,
+          short: 'true'
+        },
+        {
+          title: 'Outdoor Temperature',
+          value: `${latestNetatmoData.outdoorTemperature}℃ (${latestNetatmoData.outdoorMaxTemp}℃/${latestNetatmoData.outdoorMinTemp}℃)`,
+          short: 'true'
+        },
+        {
+          title: 'Outdoor Humidity',
+          value: `${latestNetatmoData.outdoorHumidity}％`,
+          short: 'true'
+        },
+        {
+          title: 'Rainfall',
+          value: `${latestNetatmoData.rain}mm (${latestNetatmoData.sumRain1}mm/h / ${latestNetatmoData.sumRain24}mm/24h)`,
+          short: 'true'
+        },
+        {
+          title: 'Wind',
+          value: `${latestNetatmoData.windStrength}bf (Gust${latestNetatmoData.gustStrength}bf / Max${latestNetatmoData.maxWindStr}bf)`,
+          short: 'true'
+        },
+      ]
+    }
+  ]
 }
-)
+
+const slackHeaders = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+};
+
+await fetch(slackWebhookUrl, {method: 'get', headers: slackHeaders, body: JSON.stringify(slackPayload)})
