@@ -92,4 +92,4 @@ const slackHeaders = {
   'Content-Type': 'application/json'
 };
 
-await fetch(slackWebhookUrl, {method: 'GET', headers: slackHeaders, body: JSON.stringify(slackPayload)})
+await fetch(slackWebhookUrl, {method: 'POST', headers: slackHeaders, body: JSON.stringify(slackPayload)})
