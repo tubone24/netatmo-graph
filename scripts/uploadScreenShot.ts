@@ -1,6 +1,6 @@
 import {
   encode,
-} from "https://deno.land/std@0.97.0/encoding/base64.ts";
+} from 'https://deno.land/std@1.103.0/encoding/base64.ts';
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
 const netatmoUrl = 'https://netatmo-graph.vercel.app/';
