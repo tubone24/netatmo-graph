@@ -46,8 +46,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   faunadbClient
     .query<DbRefs>(q.Paginate(q.Match(q.Ref('indexes/all_module_data')), {size: 100000}))
     .then((response) => {
+      console.log(response);
       const allModuleDataRefs = response.data
       const getAllModuleDataQuery = allModuleDataRefs.map((ref) => q.Get(ref))
+      console.log(getAllModuleDataQuery);
       faunadbClient
         .query<DbRefWithData[]>(getAllModuleDataQuery)
         .then((resp) => {
