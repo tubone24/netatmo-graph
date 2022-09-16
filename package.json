@@ -37,7 +37,7 @@
     "chart.js": "^2.9.4",
     "dayjs": "^1.10.4",
     "dayjs-plugin-utc": "^0.1.2",
-    "faunadb": "^4.0.3",
+    "faunadb": "^4.7.0",
     "jest-canvas-mock": "^2.3.0",
     "material-table": "^1.69.2",
     "next": "^10.0.6",
