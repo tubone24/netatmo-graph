@@ -178,12 +178,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             if (module.data_type.includes("Humidity")) {
               outdoorHumidity = module.dashboard_data.Humidity
             }
-            if (!module.reachable) {
-              moduleReachable = false
-            }
           }
           const q = faunadb.query
-          console.log(process.env.FAUNADB_SERVER_SECRET);
           const faunadbClient = new faunadb.Client({
             secret: process.env.FAUNADB_SERVER_SECRET,
             domain: "db.us.fauna.com"
