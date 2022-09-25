@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - update_text
-  # schedule:
-  #   - cron: '0 0 1 * *'
+  schedule:
+    - cron: '0 0 1 * *'
 
 jobs:
   UpdateText:
