@@ -42,6 +42,7 @@ export interface DbRefWithData {
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const faunadbClient = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
+    domain: "db.us.fauna.com",
   })
   faunadbClient
     .query<DbRefs>(q.Paginate(q.Match(q.Ref('indexes/all_module_data')), {size: 100000}))
