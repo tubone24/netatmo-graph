@@ -54,6 +54,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const oneMonthBeforeEpoch = dayjs().subtract(7, 'day').unix()
   const faunadbClient = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
+    domain: "db.us.fauna.com",
   })
   faunadbClient
     .query<DbRefs>(q.Paginate(q.Range((q.Match(q.Index('all_module_data_sort_timeutc'))), [], [undefined,oneMonthBeforeEpoch])))
