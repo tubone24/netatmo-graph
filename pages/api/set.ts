@@ -185,6 +185,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           const q = faunadb.query
           const faunadbClient = new faunadb.Client({
             secret: process.env.FAUNADB_SERVER_SECRET,
+            domain: "db.us.fauna.com"
           })
           const moduleData = {
             data: {
