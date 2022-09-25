@@ -159,41 +159,28 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           let outdoorMinTemp
           let outdoorMaxTemp
           let moduleReachable = true
-          let rain
-          let sumRain1
-          let sumRain24
-          let windStrength
-          let windAngle
-          let gustStrength
-          let gustAngle
-          let maxWindStr
-          let maxWindAngle
+          let rain = 0
+          let sumRain1 = 0
+          let sumRain24 = 0
+          let windStrength = 0
+          let windAngle = 0
+          let gustStrength = 0
+          let gustAngle = 0
+          let maxWindStr = 0
+          let maxWindAngle = 0
           for (const module of modules) {
             console.log(module.module_name);
-            if (module.dashboard_data.Temperature) {
+            if (module.data_type.includes("Temperature")) {
               outdoorTemperature = module.dashboard_data.Temperature
-            }
-            if (module.dashboard_data.Humidity) {
-              outdoorHumidity = module.dashboard_data.Humidity
-            }
-            if (module.dashboard_data.min_temp) {
               outdoorMinTemp = module.dashboard_data.min_temp
-            }
-            if (module.dashboard_data.max_temp) {
               outdoorMaxTemp = module.dashboard_data.max_temp
+            }
+            if (module.data_type.includes("Humidity")) {
+              outdoorHumidity = module.dashboard_data.Humidity
             }
             if (!module.reachable) {
               moduleReachable = false
             }
-            rain = module.dashboard_data.Rain || 0
-            sumRain1 = module.dashboard_data.sum_rain_1 || 0
-            sumRain24 = module.dashboard_data.sum_rain_24 || 0
-            windStrength = module.dashboard_data.WindStrength || 0
-            windAngle = module.dashboard_data.WindAngle || 0
-            gustStrength = module.dashboard_data.GustStrength || 0
-            gustAngle = module.dashboard_data.GustAngle || 0
-            maxWindStr = module.dashboard_data.max_wind_str || 0
-            maxWindAngle = module.dashboard_data.max_wind_angle || 0
           }
           const q = faunadb.query
           const faunadbClient = new faunadb.Client({
