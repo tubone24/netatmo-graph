@@ -4,8 +4,6 @@ import HumidityGraph from './humidityGraph'
 import HomeCO2 from './homeCO2'
 import HomeNoise from './homeNoise'
 import HomePressure from './homePressure'
-import Rain from './rain'
-import Wind from './wind'
 export const Graphs = (): JSX.Element => {
   return (
     <div className="container">
@@ -14,8 +12,6 @@ export const Graphs = (): JSX.Element => {
       <HomeCO2 />
       <HomeNoise />
       <HomePressure />
-      <Rain />
-      <Wind />
       <style jsx>{`
         main {
           padding: 5rem 0;
