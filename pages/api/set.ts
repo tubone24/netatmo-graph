@@ -169,6 +169,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           let maxWindStr
           let maxWindAngle
           for (const module of modules) {
+            console.log(module.module_name);
             if (module.dashboard_data.Temperature) {
               outdoorTemperature = module.dashboard_data.Temperature
             }
