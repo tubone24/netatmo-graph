@@ -136,6 +136,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           `https://api.netatmo.com/api/getstationsdata?access_token=${accessToken}`
         )
         .then((resp2) => {
+          console.log(resp2);
           const devices = resp2.data.body.devices
           const stationName = devices[0].station_name
           const homeName = devices[0].home_name
