@@ -183,6 +183,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             }
           }
           const q = faunadb.query
+          console.log(process.env.FAUNADB_SERVER_SECRET);
           const faunadbClient = new faunadb.Client({
             secret: process.env.FAUNADB_SERVER_SECRET,
             domain: "db.us.fauna.com"
