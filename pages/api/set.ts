@@ -33,6 +33,7 @@ export interface Module {
     max_temp?: number
     date_max_temp?: number
     date_min_temp?: number
+    CO2?: number
     temp_trend?: string
     Rain?: number
     sum_rain_1?: number
