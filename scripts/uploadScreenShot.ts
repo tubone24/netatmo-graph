@@ -1,25 +1,29 @@
-import {encode} from 'https://deno.land/std/encoding/base64.ts';
+import { encode } from 'https://deno.land/std/encoding/base64.ts'
 
-const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png';
-const netatmoUrl = 'https://netatmo-graph.vercel.app/';
-const slackWebhookUrl = Deno.env.get('SLACK_WEBHOOK_URL') as string;
-const imgurClientId = Deno.env.get('IMGUR_CLIENT_ID') as string;
+const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png'
+const netatmoUrl = 'https://netatmo-graph.vercel.app/'
+const slackWebhookUrl = Deno.env.get('SLACK_WEBHOOK_URL') as string
+const imgurClientId = Deno.env.get('IMGUR_CLIENT_ID') as string
 
-const readImageData = await Deno.readFile(filePath);
-const encodedData = encode(readImageData);
+const readImageData = await Deno.readFile(filePath)
+const encodedData = encode(readImageData)
 
 const imgurPayload = {
   image: encodedData.replace(new RegExp('data.*base64,'), ''),
-  type: 'base64'
+  type: 'base64',
 }
 
 const imgurHeaders = {
-  'Accept': 'application/json',
-  'Authorization': `Client-ID ${imgurClientId}`,
-  'Content-Type': 'application/json'
+  Accept: 'application/json',
+  Authorization: `Client-ID ${imgurClientId}`,
+  'Content-Type': 'application/json',
 }
 
-const imgurRes = await fetch('https://api.imgur.com/3/image', {method: 'POST', headers: imgurHeaders, body: JSON.stringify(imgurPayload)})
+const imgurRes = await fetch('https://api.imgur.com/3/image', {
+  method: 'POST',
+  headers: imgurHeaders,
+  body: JSON.stringify(imgurPayload),
+})
 const imgurJson = imgurRes.json()
 const { data: imgurData } = await imgurJson
 const imgurLink = imgurData.link
@@ -38,56 +42,75 @@ const slackPayload = {
         {
           title: 'Home Temperature',
           value: `${latestNetatmoData.homeTemperature}℃ (${latestNetatmoData.homeMaxTemp}℃/${latestNetatmoData.homeMinTemp}℃)`,
-          short: 'true'
+          short: 'true',
+        },
+        {
+          title: 'Indoor Temperature2',
+          value: `${latestNetatmoData.indoorTemperature2}℃ (${latestNetatmoData.indoorMaxTemp2}℃/${latestNetatmoData.indoorMinTemp2}℃)`,
+          short: 'true',
         },
         {
           title: 'Home Humidity',
           value: `${latestNetatmoData.homeHumidity}％`,
-          short: 'true'
+          short: 'true',
+        },
+        {
+          title: 'Indoor Humidity2',
+          value: `${latestNetatmoData.indoorHumidity2}％`,
+          short: 'true',
         },
         {
           title: 'Home CO2',
           value: `${latestNetatmoData.homeCO2}ppm`,
-          short: 'true'
+          short: 'true',
+        },
+        {
+          title: 'Indoor CO2',
+          value: `${latestNetatmoData.indoorCo22}ppm`,
+          short: 'true',
         },
         {
           title: 'Home Noise',
           value: `${latestNetatmoData.homeNoise}dB`,
-          short: 'true'
+          short: 'true',
         },
         {
           title: 'Home Pressure',
           value: `${latestNetatmoData.homePressure}mb`,
-          short: 'true'
+          short: 'true',
         },
         {
           title: 'Outdoor Temperature',
           value: `${latestNetatmoData.outdoorTemperature}℃ (${latestNetatmoData.outdoorMaxTemp}℃/${latestNetatmoData.outdoorMinTemp}℃)`,
-          short: 'true'
+          short: 'true',
         },
         {
           title: 'Outdoor Humidity',
           value: `${latestNetatmoData.outdoorHumidity}％`,
-          short: 'true'
+          short: 'true',
         },
         {
           title: 'Rainfall',
           value: `${latestNetatmoData.rain}mm (${latestNetatmoData.sumRain1}mm/h / ${latestNetatmoData.sumRain24}mm/24h)`,
-          short: 'true'
+          short: 'true',
         },
         {
           title: 'Wind',
           value: `${latestNetatmoData.windStrength}bf (Gust${latestNetatmoData.gustStrength}bf / Max${latestNetatmoData.maxWindStr}bf)`,
-          short: 'true'
+          short: 'true',
         },
-      ]
-    }
-  ]
+      ],
+    },
+  ],
 }
 
 const slackHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-};
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+}
 
-await fetch(slackWebhookUrl, {method: 'POST', headers: slackHeaders, body: JSON.stringify(slackPayload)})
+await fetch(slackWebhookUrl, {
+  method: 'POST',
+  headers: slackHeaders,
+  body: JSON.stringify(slackPayload),
+})

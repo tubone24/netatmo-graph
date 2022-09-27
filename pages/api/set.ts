@@ -137,9 +137,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           `https://api.netatmo.com/api/getstationsdata?access_token=${accessToken}`
         )
         .then((resp2) => {
-          console.log(resp2.data);
-          console.log(resp2.data.body);
-          console.log(resp2.data.body.devices);
+          console.log(resp2.data)
+          console.log(resp2.data.body)
+          console.log(resp2.data.body.devices)
           const devices = resp2.data.body.devices
           const stationName = devices[0].station_name
           const homeName = devices[0].home_name
@@ -175,26 +175,26 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           let maxWindStr = 0
           let maxWindAngle = 0
           for (const module of modules) {
-            if (module.module_name === "Outdoor") {
-              if (module.data_type.includes("Temperature")) {
+            if (module.module_name === 'Outdoor') {
+              if (module.data_type.includes('Temperature')) {
                 outdoorTemperature = module.dashboard_data.Temperature
                 outdoorMinTemp = module.dashboard_data.min_temp
                 outdoorMaxTemp = module.dashboard_data.max_temp
               }
-                if (module.data_type.includes("Humidity")) {
+              if (module.data_type.includes('Humidity')) {
                 outdoorHumidity = module.dashboard_data.Humidity
               }
             }
-            if (module.module_name === "作業部屋") {
-              if (module.data_type.includes("Temperature")) {
+            if (module.module_name === '作業部屋') {
+              if (module.data_type.includes('Temperature')) {
                 indoorTemperature2 = module.dashboard_data.Temperature
                 indoorMinTemp2 = module.dashboard_data.min_temp
                 indoorMaxTemp2 = module.dashboard_data.max_temp
               }
-              if (module.data_type.includes("Humidity")) {
+              if (module.data_type.includes('Humidity')) {
                 indoorHumidity2 = module.dashboard_data.Humidity
               }
-              if (module.data_type.includes("CO2")) {
+              if (module.data_type.includes('CO2')) {
                 indoorCo22 = module.dashboard_data.CO2
               }
             }
@@ -202,7 +202,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           const q = faunadb.query
           const faunadbClient = new faunadb.Client({
             secret: process.env.FAUNADB_SERVER_SECRET,
-            domain: "db.us.fauna.com"
+            domain: 'db.us.fauna.com',
           })
           const moduleData = {
             data: {

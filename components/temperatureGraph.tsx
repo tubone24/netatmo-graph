@@ -13,6 +13,9 @@ export const TemperatureGraph = (): JSX.Element => {
   const dataSetOutdoorTemperature = netatmo.map(
     (data) => data.outdoorTemperature
   )
+  const dataSetIndoorTemperature2 = netatmo.map(
+    (data) => data.indoorTemperature2
+  )
   const data = {
     labels: labels,
     datasets: [
@@ -57,6 +60,27 @@ export const TemperatureGraph = (): JSX.Element => {
         pointRadius: 1,
         pointHitRadius: 10,
         data: dataSetOutdoorTemperature,
+      },
+      {
+        label: 'Indoor Temperature2',
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: 'rgba(192,176,75,0.4)',
+        borderColor: 'rgb(192,161,57)',
+        borderCapStyle: 'round',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'square',
+        pointBorderColor: 'rgb(167,192,57)',
+        pointBackgroundColor: '#eee',
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgb(183,192,57)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 1,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: dataSetIndoorTemperature2,
       },
     ],
   }

@@ -81,10 +81,21 @@ export const Table = (): JSX.Element => {
               field: 'homeTemperature',
               type: 'numeric',
             },
+            {
+              title: 'Home Temperature2(℃)',
+              field: 'homeTemperatur2',
+              type: 'numeric',
+            },
             { title: 'Home CO2(ppm)', field: 'homeCO2', type: 'numeric' },
+            { title: 'Home CO2 2(ppm)', field: 'homeCo22', type: 'numeric' },
             {
               title: 'Home Humidity(%)',
               field: 'homeHumidity',
+              type: 'numeric',
+            },
+            {
+              title: 'Home Humidity2(%)',
+              field: 'homeHumidity2',
               type: 'numeric',
             },
             { title: 'Home Noise(dB)', field: 'homeNoise', type: 'numeric' },
@@ -99,7 +110,17 @@ export const Table = (): JSX.Element => {
               type: 'numeric',
             },
             { title: 'Home MinTemp(℃)', field: 'homeMinTemp', type: 'numeric' },
+            {
+              title: 'Home MinTemp2(℃)',
+              field: 'homeMinTemp2',
+              type: 'numeric',
+            },
             { title: 'Home MaxTemp(℃)', field: 'homeMaxTemp', type: 'numeric' },
+            {
+              title: 'Home MaxTemp2(℃)',
+              field: 'homeMaxTemp2',
+              type: 'numeric',
+            },
             {
               title: 'Outdoor Temperature(℃)',
               field: 'outdoorTemperature',

@@ -10,6 +10,7 @@ export const HomeCO2Graph = (): JSX.Element => {
     dayjs.unix(Number(data.timeUtc)).format('YYYY-MM-DDTHH:mm:ssZ[Z]')
   )
   const dataSetHomeCO2 = netatmo.map((data) => data.homeCO2)
+  const dataSetIndoorCO22 = netatmo.map((data) => data.indoorCo22)
   const data = {
     labels: labels,
     datasets: [
@@ -33,6 +34,27 @@ export const HomeCO2Graph = (): JSX.Element => {
         pointRadius: 1,
         pointHitRadius: 10,
         data: dataSetHomeCO2,
+      },
+      {
+        label: 'Indoor CO2 2',
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: 'rgba(96,75,192,0.4)',
+        borderColor: 'rgb(100,75,192)',
+        borderCapStyle: 'round',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'square',
+        pointBorderColor: 'rgb(118,75,192)',
+        pointBackgroundColor: '#eee',
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgb(96,75,192)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 1,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: dataSetIndoorCO22,
       },
     ],
   }

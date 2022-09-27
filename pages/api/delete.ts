@@ -54,24 +54,34 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const oneMonthBeforeEpoch = dayjs().subtract(7, 'day').unix()
   const faunadbClient = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
-    domain: "db.us.fauna.com",
+    domain: 'db.us.fauna.com',
   })
   faunadbClient
-    .query<DbRefs>(q.Paginate(q.Range((q.Match(q.Index('all_module_data_sort_timeutc'))), [], [undefined,oneMonthBeforeEpoch])))
+    .query<DbRefs>(
+      q.Paginate(
+        q.Range(
+          q.Match(q.Index('all_module_data_sort_timeutc')),
+          [],
+          [undefined, oneMonthBeforeEpoch]
+        )
+      )
+    )
     .then((response) => {
       console.log(response)
       const deleteRef = response.data
       deleteRef.map((ref) => {
-        faunadbClient.query(q.Delete(ref[2])).then((response2) => {
-          console.log(response2)
-        }).catch((error) => {
-          res.statusCode = 500
-          res.json({ error: error.toString() })
-          }
-        )
+        faunadbClient
+          .query(q.Delete(ref[2]))
+          .then((response2) => {
+            console.log(response2)
+          })
+          .catch((error) => {
+            res.statusCode = 500
+            res.json({ error: error.toString() })
+          })
       })
       res.statusCode = 200
-      res.json({"status": "ok"})
+      res.json({ status: 'ok' })
     })
     .catch((error) => {
       res.statusCode = 500

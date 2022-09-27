@@ -11,6 +11,7 @@ export const HumidityGraph = (): JSX.Element => {
   )
   const dataSetHomeHumidity = netatmo.map((data) => data.homeHumidity)
   const dataSetOutdoorHumidity = netatmo.map((data) => data.outdoorHumidity)
+  const dataSetIndoorHumidity2 = netatmo.map((data) => data.indoorHumidity2)
   const data = {
     labels: labels,
     datasets: [
@@ -55,6 +56,27 @@ export const HumidityGraph = (): JSX.Element => {
         pointRadius: 1,
         pointHitRadius: 10,
         data: dataSetOutdoorHumidity,
+      },
+      {
+        label: 'Indoor Humidity 2',
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: 'rgba(176,192,75,0.4)',
+        borderColor: 'rgb(192,190,57)',
+        borderCapStyle: 'round',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'square',
+        pointBorderColor: 'rgb(174,192,57)',
+        pointBackgroundColor: '#eee',
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgb(192,181,57)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 1,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: dataSetIndoorHumidity2,
       },
     ],
   }
