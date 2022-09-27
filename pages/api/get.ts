@@ -27,6 +27,11 @@ export interface DbRefWithData {
     outdoorHumidity: number
     outdoorMinTemp: number
     outdoorMaxTemp: number
+    indoorTemperature2: number
+    indoorHumidity2: number
+    indoorMinTemp2: number
+    indoorMaxTemp2: number
+    indoorCo22: number
     rain: number
     sumRain1: number
     sumRain24: number
