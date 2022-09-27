@@ -83,7 +83,7 @@ export const Table = (): JSX.Element => {
             },
             {
               title: 'Indoor Temperature2(℃)',
-              field: 'indoorTemperature',
+              field: 'indoorTemperature2',
               type: 'numeric',
             },
             { title: 'Home CO2(ppm)', field: 'homeCO2', type: 'numeric' },
@@ -95,7 +95,7 @@ export const Table = (): JSX.Element => {
             },
             {
               title: 'Indoor Humidity2(%)',
-              field: 'IndoorHumidity2',
+              field: 'indoorHumidity2',
               type: 'numeric',
             },
             { title: 'Home Noise(dB)', field: 'homeNoise', type: 'numeric' },
