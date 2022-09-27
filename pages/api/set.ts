@@ -158,6 +158,11 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           let outdoorHumidity
           let outdoorMinTemp
           let outdoorMaxTemp
+          let indoorTemperature2
+          let indoorHumidity2
+          let indoorMinTemp2
+          let indoorMaxTemp2
+          let indoorCo22
           let moduleReachable = true
           let rain = 0
           let sumRain1 = 0
@@ -169,13 +174,28 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           let maxWindStr = 0
           let maxWindAngle = 0
           for (const module of modules) {
-            if (module.data_type.includes("Temperature")) {
-              outdoorTemperature = module.dashboard_data.Temperature
-              outdoorMinTemp = module.dashboard_data.min_temp
-              outdoorMaxTemp = module.dashboard_data.max_temp
+            if (module.module_name === "Outdoor") {
+              if (module.data_type.includes("Temperature")) {
+                outdoorTemperature = module.dashboard_data.Temperature
+                outdoorMinTemp = module.dashboard_data.min_temp
+                outdoorMaxTemp = module.dashboard_data.max_temp
+              }
+                if (module.data_type.includes("Humidity")) {
+                outdoorHumidity = module.dashboard_data.Humidity
+              }
             }
-            if (module.data_type.includes("Humidity")) {
-              outdoorHumidity = module.dashboard_data.Humidity
+            if (module.module_name === "作業部屋") {
+              if (module.data_type.includes("Temperature")) {
+                indoorTemperature2 = module.dashboard_data.Temperature
+                indoorMinTemp2 = module.dashboard_data.min_temp
+                indoorMaxTemp2 = module.dashboard_data.max_temp
+              }
+              if (module.data_type.includes("Humidity")) {
+                indoorHumidity2 = module.dashboard_data.Humidity
+              }
+              if (module.data_type.includes("CO2")) {
+                indoorCo22 = module.dashboard_data.CO2
+              }
             }
           }
           const q = faunadb.query
@@ -201,6 +221,11 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
               outdoorHumidity,
               outdoorMinTemp,
               outdoorMaxTemp,
+              indoorTemperature2,
+              indoorHumidity2,
+              indoorMinTemp2,
+              indoorMaxTemp2,
+              indoorCo22,
               rain,
               sumRain1,
               sumRain24,
