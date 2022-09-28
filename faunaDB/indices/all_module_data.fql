@@ -1,0 +1,6 @@
+{
+  name: "all_module_data",
+  unique: false,
+  serialized: true,
+  source: "module_data"
+}
