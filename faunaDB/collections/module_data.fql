@@ -1,0 +1,5 @@
+{
+  name: "module_data",
+  history_days: 7,
+  ttl_days: 7
+}
