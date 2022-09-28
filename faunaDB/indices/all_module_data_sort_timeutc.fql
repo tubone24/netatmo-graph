@@ -1,0 +1,11 @@
+{
+  name: "all_module_data_sort_timeutc",
+  unique: false,
+  serialized: true,
+  source: "module_data",
+  terms: [
+    {
+      field: ["data", "timeUtc"]
+    }
+  ]
+}
