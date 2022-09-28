@@ -137,9 +137,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
           `https://api.netatmo.com/api/getstationsdata?access_token=${accessToken}`
         )
         .then((resp2) => {
-          console.log(resp2.data)
-          console.log(resp2.data.body)
-          console.log(resp2.data.body.devices)
           const devices = resp2.data.body.devices
           const stationName = devices[0].station_name
           const homeName = devices[0].home_name
@@ -210,32 +207,32 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
               homeName,
               timeUtc,
               homeReachable,
-              homeTemperature,
-              homeCO2,
-              homeHumidity,
-              homeNoise,
-              homePressure,
-              homeAbsolutePressure,
-              homeMinTemp,
-              homeMaxTemp,
-              outdoorTemperature,
-              outdoorHumidity,
-              outdoorMinTemp,
-              outdoorMaxTemp,
-              indoorTemperature2,
-              indoorHumidity2,
-              indoorMinTemp2,
-              indoorMaxTemp2,
-              indoorCo22,
-              rain,
-              sumRain1,
-              sumRain24,
-              windStrength,
-              windAngle,
-              gustStrength,
-              gustAngle,
-              maxWindStr,
-              maxWindAngle,
+              homeTemperature.toFixed(2),
+              homeCO2.toFixed(2),
+              homeHumidity.toFixed(2),
+              homeNoise.toFixed(2),
+              homePressure.toFixed(2),
+              homeAbsolutePressure.toFixed(2),
+              homeMinTemp.toFixed(2),
+              homeMaxTemp.toFixed(2),
+              outdoorTemperature.toFixed(2),
+              outdoorHumidity.toFixed(2),
+              outdoorMinTemp.toFixed(2),
+              outdoorMaxTemp.toFixed(2),
+              indoorTemperature2.toFixed(2),
+              indoorHumidity2.toFixed(2),
+              indoorMinTemp2.toFixed(2),
+              indoorMaxTemp2.toFixed(2),
+              indoorCo22.toFixed(2),
+              rain.toFixed(2),
+              sumRain1.toFixed(2),
+              sumRain24.toFixed(2),
+              windStrength.toFixed(2),
+              windAngle.toFixed(2),
+              gustStrength.toFixed(2),
+              gustAngle.toFixed(2),
+              maxWindStr.toFixed(2),
+              maxWindAngle.toFixed(2),
             },
           }
           faunadbClient
