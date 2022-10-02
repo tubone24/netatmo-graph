@@ -51,7 +51,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     res.json({ error: 'invalid API KEY' })
     return
   }
-  const oneMonthBeforeEpoch = dayjs().subtract(3, 'day').unix()
+  const oneMonthBeforeEpoch = dayjs().subtract(2, 'day').unix()
   console.log(oneMonthBeforeEpoch);
   const faunadbClient = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
