@@ -68,10 +68,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     )
     .then((response) => {
       console.log(response)
-      const deleteRef = response[1]
+      const deleteRef = response.data
       deleteRef.map((ref) => {
         faunadbClient
-          .query(q.Delete(ref[2]))
+          .query(q.Delete(ref[0]))
           .then((response2) => {
             console.log(response2)
           })
