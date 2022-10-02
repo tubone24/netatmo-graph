@@ -52,6 +52,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     return
   }
   const oneMonthBeforeEpoch = dayjs().subtract(3, 'day').unix()
+  console.log(oneMonthBeforeEpoch);
   const faunadbClient = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
     domain: 'db.us.fauna.com',
@@ -70,6 +71,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
       console.log(response)
       const deleteRef = response.data
       deleteRef.map((ref) => {
+        console.log(ref)
         faunadbClient
           .query(q.Delete(ref[0]))
           .then((response2) => {
