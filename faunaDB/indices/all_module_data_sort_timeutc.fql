@@ -3,7 +3,10 @@
   unique: false,
   serialized: true,
   source: "module_data",
-  terms: [
+  values: [
+    {
+      field: ["ref"]
+    },
     {
       field: ["data", "timeUtc"]
     }
