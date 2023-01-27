@@ -57,7 +57,7 @@
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/addon-links": "^6.1.14",
-    "@storybook/addon-storyshots": "^6.1.14",
+    "@storybook/addon-storyshots": "^6.5.16",
     "@storybook/addon-storysource": "^6.1.14",
     "@storybook/addon-viewport": "^6.1.14",
     "@storybook/cli": "^6.1.14",
