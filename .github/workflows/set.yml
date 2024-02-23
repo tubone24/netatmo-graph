@@ -1,6 +1,7 @@
 name: Set Netatmo Data
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
