@@ -122,12 +122,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     return
   }
   const params = new URLSearchParams()
-  params.append('grant_type', 'password')
+  params.append('grant_type', 'refresh_token')
   params.append('client_id', process.env.NETATMO_CLIENT_ID)
   params.append('client_secret', process.env.NETATMO_CLIENT_SECRET)
-  params.append('username', process.env.NETATMO_USERNAME)
-  params.append('password', process.env.NETATMO_PASSWORD)
-  params.append('scope', 'read_station')
+  params.append('refresh_token', process.env.REFRESH_TOKEN)
   axios
     .post<AuthResp>('https://api.netatmo.com/oauth2/token', params)
     .then((resp) => {
