@@ -1,4 +1,4 @@
-import { encode } from 'https://deno.land/std/encoding/base64.ts'
+import { encodeBase64 } from 'https://deno.land/std/encoding/base64.ts'
 
 const filePath = './cypress/screenshots/screenshot.spec.js/screenShot.png'
 const netatmoUrl = 'https://netatmo-graph.vercel.app/'
@@ -6,7 +6,7 @@ const slackWebhookUrl = Deno.env.get('SLACK_WEBHOOK_URL') as string
 const imgurClientId = Deno.env.get('IMGUR_CLIENT_ID') as string
 
 const readImageData = await Deno.readFile(filePath)
-const encodedData = encode(readImageData)
+const encodedData = encodeBase64(readImageData)
 
 const imgurPayload = {
   image: encodedData.replace(new RegExp('data.*base64,'), ''),
